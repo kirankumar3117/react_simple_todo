@@ -7,3 +7,10 @@
   text-align: center;
 }
 
+svg{
+  position:fixed;
+  top:95vh;
+  left:98vh;
+
+}
+
