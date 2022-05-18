@@ -1,57 +1,39 @@
 import React, { useState } from 'react'
 import Todoitem from './Todoitem'
 import "./todo.css"
+import Todoinput from './Todoinput'
+import Todolist from './Todolist'
 
 const Todo = () => {
-    let [Todolist,setTodolist]=useState([])
-    const [input,setInput]=useState("")
-    const handle=(e)=>{
-      setInput(e.target.value)
+let [list,setList]=useState([])
+  const addTodo=(value)=>{
+    const payload={
+      id:Date.now(),
+      state:false,
+      value:value,
     }
-    let payload={}
-    const handleinput=()=>{
-        if(input.length>0){
-        payload={
-            id:Date.now(),
-            stat:false,
-            value:input,
-        }
-        Todolist=([payload,...Todolist])
-        setTodolist(Todolist)
-        setInput("")
-    }
-    else{
-        alert("please enter something")
-    }
-    }
-    const changestate=(id)=>{
-       Todolist.map(e=>{
-           return (e.id===id ? e.stat=(!e.stat):"")
-       })
-       setTodolist([...Todolist])
-       
-    }
+    list=[payload,...list]
+    setList(list)
+    
+  }
+  const toggle=(id)=>{
+    list.map(e=>{
+        return (e.id===id ? e.state=(!e.state):"")
+    })
+    setList([...list])
+    
+}
+   
   return (
     <div className='container'>
-        <div className='input-field'>
-        <input value={input} placeholder='Write Somthing' onChange={handle} className="input" />
-        <button onClick={
-          handleinput
-        } className="inputadd">+</button>
-        </div>
-
-        {Todolist.map(todo=>{
-            return (
-                <div className='todolist'>
-                    <div className={todo.stat===false ? "todovalue":"rtodovalue"}>{todo.value}</div>
-            <button onClick={()=>changestate(todo.id)} className={todo.stat===false ? "toggle":"rtoggle"}></button>
-         
-            </div>
-            )
-
-
-            // <Todoitem Todolist={Todolist} todo={Todo}/>
+    
+        <Todoinput addTodo={addTodo}/>
+       <Todolist>
+       {list.map(todo=>{
+        return <div><Todoitem todo={todo} toggle={toggle}/></div>
         })}
+       </Todolist>
+        
     </div>
   )
 }
