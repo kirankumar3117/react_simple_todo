@@ -7,13 +7,18 @@ import Todolist from './Todolist'
 const Todo = () => {
 let [list,setList]=useState([])
   const addTodo=(value)=>{
-    const payload={
-      id:Date.now(),
-      state:false,
-      value:value,
+    if(value.length>0){
+      const payload={
+        id:Date.now(),
+        state:false,
+        value:value,
+      }
+      list=[payload,...list]
+      setList(list)
     }
-    list=[payload,...list]
-    setList(list)
+    else{
+      alert("Please Write Something")
+    }
     
   }
   const toggle=(id)=>{
